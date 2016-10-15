@@ -4,6 +4,7 @@
 public class UserImpl implements User {
     private final String name;
     private int id;
+    private Library library;
 
     public UserImpl(String name) {
         this.name = name;
@@ -22,5 +23,17 @@ public class UserImpl implements User {
     @Override
     public void setID(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int register(Library library) {
+        this.library = library;
+        setID(library.getID(name));
+        return id;
+    }
+
+    @Override
+    public String getLibrary() {
+        return library.getName();
     }
 }

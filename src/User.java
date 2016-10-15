@@ -8,4 +8,8 @@ public interface User {
     int getID();
 
     void setID(int id);
+
+    int register(Library library);
+
+    String getLibrary();
 }
