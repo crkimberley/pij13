@@ -11,6 +11,7 @@ public class LibraryImpl implements Library {
     private int userCount = 0;
     private List<Book> books;
     private int bookCount = 0;
+    private int bookBorowedCount = 0;
 
     public LibraryImpl(String name) {
         this.name = name;
@@ -55,6 +56,7 @@ public class LibraryImpl implements Library {
         for (int i=0; i<bookCount; i++) {
             if (books.get(i).getTitle().equals(title) && !books.get(i).isTaken()) {
                 books.get(i).setTaken(true);
+                bookBorowedCount++;
                 return books.get(i);
             }
         }
@@ -66,8 +68,24 @@ public class LibraryImpl implements Library {
         for (int i=0; i<bookCount; i++) {
             if (books.get(i).getTitle().equals(book.getTitle())) {
                 book.setTaken(false);
+                bookBorowedCount--;
                 return;
             }
         }
+    }
+
+    @Override
+    public int getReaderCount() {
+        return userCount;
+    }
+
+    @Override
+    public int getBookCount() {
+        return bookCount;
+    }
+
+    @Override
+    public int getBookBorrowedCount() {
+        return bookBorowedCount;
     }
 }

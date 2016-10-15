@@ -94,4 +94,55 @@ public class LibraryTest {
         library.returnBook(book);
         assertEquals("James Joyce", library.takeBook("Ulysses").getAuthor());
     }
+
+    @Test
+    public void testAdd3UsersThenGetReaderCount() {
+        int idA = userA.register(library);
+        int idB = userB.register(library);
+        int idC = userC.register(library);
+        assertEquals(3, library.getReaderCount());
+    }
+
+    @Test
+    public void testGetReaderCountForEmptyList() {
+        assertEquals(0, library.getReaderCount());
+    }
+
+    @Test
+    public void testAdd2BooksThenGetBookCount() {
+        library.addBook("James Joyce", "Ulysses");
+        library.addBook("Herman Melville", "Moby Dick");
+        assertEquals(2, library.getBookCount());
+    }
+
+    @Test
+    public void testGetBookCountForEmptyList() {
+        assertEquals(0, library.getBookCount());
+    }
+
+    @Test
+    public void testBorrow0BooksThenGetBookBorrowedCount() {
+        library.addBook("James Joyce", "Ulysses");
+        library.addBook("Herman Melville", "Moby Dick");
+        assertEquals(0, library.getBookBorrowedCount());
+    }
+
+    @Test
+    public void testBorrow2BooksThenGetBookBorrowedCount() {
+        library.addBook("James Joyce", "Ulysses");
+        library.addBook("Herman Melville", "Moby Dick");
+        library.takeBook("Ulysses");
+        library.takeBook("Moby Dick");
+        assertEquals(2, library.getBookBorrowedCount());
+    }
+
+    @Test
+    public void testBorrow2BooksReturn1ThenGetBookBorrowedCount() {
+        library.addBook("James Joyce", "Ulysses");
+        library.addBook("Herman Melville", "Moby Dick");
+        library.takeBook("Ulysses");
+        Book book = library.takeBook("Moby Dick");
+        library.returnBook(book);
+        assertEquals(1, library.getBookBorrowedCount());
+    }
 }
