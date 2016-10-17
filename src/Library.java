@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author crkimberley on 15/10/2016.
  */
@@ -13,6 +16,8 @@ public interface Library {
 
     void addBook(String author, String title);
 
+    void addBook(Book book);
+
     Book takeBook(String title);
 
     void returnBook(Book book);
@@ -22,4 +27,10 @@ public interface Library {
     int getBookCount();
 
     int getBookBorrowedCount();
+
+    Set<String> getBorrowingUsers();
+
+    Set<String> getUsers();
+
+    String getBookBorrower(String title);
 }

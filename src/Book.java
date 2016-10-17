@@ -10,4 +10,8 @@ public interface Book {
     boolean isTaken();
 
     void setTaken(boolean taken);
+
+    void setBorrower(User user);
+
+    User getBorrower();
 }

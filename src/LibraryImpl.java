@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author crkimberley on 15/10/2016.
@@ -47,7 +46,12 @@ public class LibraryImpl implements Library {
 
     @Override
     public void addBook(String author, String title) {
-        books.add(new BookImpl(author, title));
+        addBook(new BookImpl(author, title));
+    }
+
+    @Override
+    public void addBook(Book book) {
+        books.add(book);
         bookCount++;
     }
 
@@ -87,5 +91,31 @@ public class LibraryImpl implements Library {
     @Override
     public int getBookBorrowedCount() {
         return bookBorowedCount;
+    }
+
+    @Override
+    public Set<String> getBorrowingUsers() {
+        Set<String> borrowingUsers = new HashSet<String>();
+        for (int i=0; i<bookCount; i++) {
+            if (books.get(i).isTaken()) {
+                borrowingUsers.add(books.get(i).getBorrower().getName());
+            }
+        }
+        return borrowingUsers;
+    }
+
+    @Override
+    public Set<String> getUsers() {
+        return new HashSet<String>(users);
+    }
+
+    @Override
+    public String getBookBorrower(String title) {
+        for (int i=0; i<bookCount; i++) {
+            if (books.get(i).getTitle().equals(title) && books.get(i).isTaken()) {
+                return books.get(i).getBorrower().getName();
+            }
+        }
+        return null;
     }
 }

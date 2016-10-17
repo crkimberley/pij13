@@ -5,11 +5,13 @@ public class BookImpl implements Book {
     private final String author;
     private final String title;
     private boolean taken;
+    private User borrower;
 
     public BookImpl(String author, String title) {
         this.author = author;
         this.title = title;
         taken = false;
+        borrower = null;
     }
 
     @Override
@@ -30,5 +32,15 @@ public class BookImpl implements Book {
     @Override
     public void setTaken(boolean taken) {
         this.taken = taken;
+    }
+
+    @Override
+    public void setBorrower(User user) {
+        borrower = user;
+    }
+
+    @Override
+    public User getBorrower() {
+        return borrower;
     }
 }

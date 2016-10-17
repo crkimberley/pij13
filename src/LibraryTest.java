@@ -1,6 +1,11 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
 /**
@@ -10,6 +15,7 @@ public class LibraryTest {
     private Library library;
     private final static String name = "Birkbeck";
     private User userA, userB, userC;
+    private Book bookA, bookB, bookC, bookD;
 
     @Before
     public void setUp() throws Exception {
@@ -17,6 +23,10 @@ public class LibraryTest {
         userA = new UserImpl("Amy");
         userB = new UserImpl("Beth");
         userC = new UserImpl("Claire");
+        bookA = new BookImpl("James Joyce", "Ulysses");
+        bookB = new BookImpl("Herman Melville", "Moby Dick");
+        bookC = new BookImpl("Leo Tolstoy", "War and Peace");
+        bookD = new BookImpl("Marcel Proust", "In Search of Lost Time");
     }
 
     @Test
@@ -144,5 +154,59 @@ public class LibraryTest {
         Book book = library.takeBook("Moby Dick");
         library.returnBook(book);
         assertEquals(1, library.getBookBorrowedCount());
+    }
+
+    @Test
+    public void testGetAllBorrowingUsers() {
+        userA.register(library);
+        userB.register(library);
+        library.addBook(bookA);
+        library.addBook(bookB);
+        userA.takeBook("Ulysses");
+        userB.takeBook("Moby Dick");
+        Set<String> expectedUsers = new HashSet<String>();
+        expectedUsers.add("Amy");
+        expectedUsers.add("Beth");
+        assertEquals(expectedUsers, library.getBorrowingUsers());
+    }
+
+    @Test
+    public void testGetAllBorrowingUsersWhen1UserHas2Books() {
+        userA.register(library);
+        userB.register(library);
+        userC.register(library);
+        library.addBook(bookA);
+        library.addBook(bookB);
+        library.addBook(bookC);
+        library.addBook(bookD);
+        userA.takeBook("Ulysses");
+        userA.takeBook("War and Peace");
+        userB.takeBook("In Search of Lost Time");
+        userC.takeBook("Moby Dick");
+        Set<String> expectedUsers = new HashSet<String>();
+        expectedUsers.add("Amy");
+        expectedUsers.add("Beth");
+        expectedUsers.add("Claire");
+        assertEquals(expectedUsers, library.getBorrowingUsers());
+    }
+
+    @Test
+    public void testGetAllUsers() {
+        userA.register(library);
+        userB.register(library);
+        userC.register(library);
+        Set<String> expectedUsers = new HashSet<String>();
+        expectedUsers.add("Amy");
+        expectedUsers.add("Beth");
+        expectedUsers.add("Claire");
+        assertEquals(expectedUsers, library.getUsers());
+    }
+
+    @Test
+    public void testGetBorroweForTitle() {
+        userA.register(library);
+        library.addBook(bookA);
+        userA.takeBook("Ulysses");
+        assertEquals("Amy", library.getBookBorrower("Ulysses"));
     }
 }

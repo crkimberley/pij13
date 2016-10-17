@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * @author crkimberley on 15/10/2016.
  */
@@ -12,4 +14,10 @@ public interface User {
     int register(Library library);
 
     String getLibrary();
+
+    Book takeBook(String ulysses);
+
+    ArrayList<String> getTitlesBorrowed();
+
+    void returnBook(Book book1);
 }
