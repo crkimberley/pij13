@@ -15,7 +15,7 @@ public interface User {
 
     String getLibrary();
 
-    Book takeBook(String ulysses);
+    Book takeBook(String title);
 
     ArrayList<String> getTitlesBorrowed();
 
