@@ -7,7 +7,6 @@ public class UserImpl implements User {
     private final String name;
     private int id;
     private Library library;
-    private Book book;
     private ArrayList<String> titlesBorrowed;
 
     public UserImpl(String name) {
@@ -44,7 +43,7 @@ public class UserImpl implements User {
 
     @Override
     public Book takeBook(String title) {
-        book = library.takeBook(title);
+        Book book = library.takeBook(title);
         if (book != null) {
             book.setBorrower(this);
             titlesBorrowed.add(title);

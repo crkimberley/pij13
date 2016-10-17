@@ -78,6 +78,7 @@ public class LibraryImpl implements Library {
                 return books.get(i);
             }
         }
+        System.out.println("TITLE NOT IN LIBRARY");
         return null;
     }
 
