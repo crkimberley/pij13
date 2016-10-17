@@ -7,6 +7,7 @@ public class LibraryImpl implements Library {
     private String name;
     private int maxBooksPerUser = 3;
     private List<String> users;
+    private List<User> userImpls;
     private int userCount = 0;
     private List<Book> books;
     private int bookCount = 0;
@@ -15,6 +16,7 @@ public class LibraryImpl implements Library {
     public LibraryImpl(String name) {
         this.name = name;
         users = new ArrayList<String>();
+        userImpls = new ArrayList<User>();
         books = new ArrayList<Book>();
     }
 
@@ -35,13 +37,25 @@ public class LibraryImpl implements Library {
         return userCount;
     }
 
+    public int getID(User user, String name) {
+        userImpls.add(user);
+        return getID(name);
+    }
+
     public int getMaxBooksPerUser() {
         return maxBooksPerUser;
     }
 
     @Override
-    public void setMaxBooksPerUser(int number) {
-        maxBooksPerUser = number;
+    public ArrayList<String> setMaxBooksPerUser(int max) {
+        ArrayList<String> overMax = new ArrayList<String>();
+        maxBooksPerUser = max;
+        for (User user : userImpls) {
+            if (user.getTitlesBorrowed().size() > max) {
+                overMax.add(user.getName());
+            }
+        }
+        return overMax;
     }
 
     @Override

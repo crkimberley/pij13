@@ -33,7 +33,7 @@ public class UserImpl implements User {
     @Override
     public int register(Library library) {
         this.library = library;
-        setID(library.getID(name));
+        setID(library.getID(this, name));
         return id;
     }
 

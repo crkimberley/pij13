@@ -15,7 +15,7 @@ public class LibraryTest {
     private Library library;
     private final static String name = "Birkbeck";
     private User userA, userB, userC;
-    private Book bookA, bookB, bookC, bookD;
+    private Book bookA, bookB, bookC, bookD, bookE, bookF;
 
     @Before
     public void setUp() throws Exception {
@@ -27,6 +27,8 @@ public class LibraryTest {
         bookB = new BookImpl("Herman Melville", "Moby Dick");
         bookC = new BookImpl("Leo Tolstoy", "War and Peace");
         bookD = new BookImpl("Marcel Proust", "In Search of Lost Time");
+        bookE = new BookImpl("F. Scott Fitzgerald", "The Great Gatsby");
+        bookF = new BookImpl("Miguel de Cervantes", "Don Quixote");
     }
 
     @Test
@@ -203,10 +205,95 @@ public class LibraryTest {
     }
 
     @Test
-    public void testGetBorroweForTitle() {
+    public void testGetBorrowerForTitle() {
         userA.register(library);
         library.addBook(bookA);
         userA.takeBook("Ulysses");
         assertEquals("Amy", library.getBookBorrower("Ulysses"));
+    }
+
+    @Test
+    public void testMaxBooksPerUser1() {
+        ArrayList<String> expected = new ArrayList<String>();
+        userA.register(library);
+        userB.register(library);
+        userC.register(library);
+        library.addBook(bookA);
+        library.addBook(bookB);
+        library.addBook(bookC);
+        library.addBook(bookD);
+        userA.takeBook("Ulysses");
+        userA.takeBook("War and Peace");
+        userB.takeBook("In Search of Lost Time");
+        userC.takeBook("Moby Dick");
+        expected.add("Amy");
+        assertEquals(expected, library.setMaxBooksPerUser(1));
+    }
+
+    @Test
+    public void testMaxBooksPerUser0() {
+        ArrayList<String> expected = new ArrayList<String>();
+        userA.register(library);
+        userB.register(library);
+        userC.register(library);
+        library.addBook(bookA);
+        library.addBook(bookB);
+        library.addBook(bookC);
+        library.addBook(bookD);
+        library.addBook(bookE);
+        library.addBook(bookF);
+        userA.takeBook("Ulysses");
+        userA.takeBook("War and Peace");
+        userA.takeBook("Don Quixote");
+        userB.takeBook("In Search of Lost Time");
+        userB.takeBook("The Great Gatsby");
+        userC.takeBook("Moby Dick");
+        expected.add("Amy");
+        expected.add("Beth");
+        expected.add("Claire");
+        assertEquals(expected, library.setMaxBooksPerUser(0));
+    }
+
+    @Test
+    public void testMaxBooksPerUser2() {
+        ArrayList<String> expected = new ArrayList<String>();
+        userA.register(library);
+        userB.register(library);
+        userC.register(library);
+        library.addBook(bookA);
+        library.addBook(bookB);
+        library.addBook(bookC);
+        library.addBook(bookD);
+        library.addBook(bookE);
+        library.addBook(bookF);
+        userA.takeBook("Ulysses");
+        userA.takeBook("War and Peace");
+        userA.takeBook("Don Quixote");
+        userB.takeBook("In Search of Lost Time");
+        userB.takeBook("The Great Gatsby");
+        userC.takeBook("Moby Dick");
+        expected.add("Amy");
+        assertEquals(expected, library.setMaxBooksPerUser(2));
+    }
+
+    @Test
+    public void testMaxBooksPerUser3() {
+        ArrayList<String> expected = new ArrayList<String>();
+        userA.register(library);
+        userB.register(library);
+        userC.register(library);
+        library.addBook(bookA);
+        library.addBook(bookB);
+        library.addBook(bookC);
+        library.addBook(bookD);
+        library.addBook(bookE);
+        library.addBook(bookF);
+        userA.takeBook("Ulysses");
+        userA.takeBook("War and Peace");
+        userA.takeBook("Don Quixote");
+        userB.takeBook("In Search of Lost Time");
+        userB.takeBook("The Great Gatsby");
+        userC.takeBook("Moby Dick");
+        assertEquals(expected, library.setMaxBooksPerUser(3));
     }
 }

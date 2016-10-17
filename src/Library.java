@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -10,9 +11,11 @@ public interface Library {
 
     int getID(String name);
 
+    int getID(User user, String name);
+
     int getMaxBooksPerUser();
 
-    void setMaxBooksPerUser(int number);
+    ArrayList<String> setMaxBooksPerUser(int number);
 
     void addBook(String author, String title);
 
